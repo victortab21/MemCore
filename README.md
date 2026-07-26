@@ -1,49 +1,24 @@
-# 🚀 MemCore
+# MemCore
 
-**Ultra-Low Latency In-Memory Key-Value Store**
-
-MemCore is a high-performance, concurrent, in-memory key-value database written in modern C++17. It is designed to act as a highly efficient caching layer or volatile storage engine, prioritizing sub-millisecond response times and resource efficiency.
-
-## 🧠 Core Design Advantages
-
-* **Asynchronous Network Engine (`epoll`):** Built strictly on Linux sockets using the `epoll` API in **Edge-Triggered (`EPOLLET`)** mode. This allows the server to handle thousands of concurrent connections with zero busy-waiting and minimal CPU overhead.
-* **Non-Blocking I/O:** All sockets (server and clients) are configured via `fcntl` as non-blocking, ensuring the event loop never stalls on read/write operations.
-* **Thread-Safe Architecture:** Memory operations are safeguarded against race conditions under high concurrency using granular `std::lock_guard<std::mutex>` synchronization.
-* **Custom Protocol & Parser:** Implements a lightweight TCP text protocol supporting core operations (`SET`, `GET`, `DEL`).
-* **Latency Profiling:** Includes a custom benchmarking suite measuring raw in-memory operation latency, calculating distribution across p10, p50, p90, and p99 percentiles.
+An in-memory, thread-safe key-value store written in C++17. Uses an asynchronous event loop with Linux `epoll` (Edge-Triggered) and non-blocking I/O to handle TCP connections over IPv6.
 
 ---
 
-## 🛠️ Build & Installation / Compilación y Uso
+## Technical Highlights
 
-### Prerequisites
-* GCC/Clang with C++17 support
-* CMake 3.10+
-* Linux environment (or WSL)
+- **Event-Driven Networking:** Uses `epoll` in Edge-Triggered (`EPOLLET`) mode instead of spawning a thread per connection. Connections are handled non-blocking via `fcntl`.
+- **Thread Safety:** The core key-value map is synchronized using `std::lock_guard<std::mutex>` to handle concurrent reads/writes safely.
+- **Minimalist Protocol:** Simple text-based TCP protocol (`SET <key> <val>`, `GET <key>`, `DEL <key>`).
+- **Benchmarking Tool:** Includes a dedicated benchmark binary that measures raw in-memory operation latencies (P10, P50, P90, P99) across 1M operations.
 
-### 1. Compilation
+---
+
+## How to Build & Run
+
+### 1. Build using CMake
+Requires `g++` (C++17) and `cmake`.
+
 ```bash
-# Clone the repository / Clonar el repositorio
-git clone [https://github.com/victortab21/MemCore.git](https://github.com/victortab21/MemCore.git)
-cd MemCore
-
-# Create build directory and compile / Crear directorio de build y compilar
-mkdir build && cd build
+mkdir -p build && cd build
 cmake ..
 make
-
-*(Spanish Version)*
-
-# 🚀 MemCore
-
-**Base de Datos Clave-Valor en Memoria de Ultra-Baja Latencia**
-
-MemCore es una base de datos clave-valor en memoria, concurrente y de alto rendimiento escrita en C++17 moderno. Está diseñada para actuar como una capa de caché altamente eficiente o un motor de almacenamiento volátil, priorizando tiempos de respuesta por debajo del milisegundo y la eficiencia de recursos.
-
-## 🧠 Ventajas de Diseño Core
-
-* **Motor de Red Asíncrono (`epoll`):** Construido estrictamente sobre sockets de Linux usando la API `epoll` en modo **Edge-Triggered (`EPOLLET`)**. Esto permite al servidor manejar miles de conexiones concurrentes sin *busy-waiting* y con un consumo de CPU mínimo.
-* **I/O No Bloqueante:** Todos los sockets (servidor y clientes) están configurados mediante `fcntl` como no bloqueantes, garantizando que el bucle de eventos nunca se detenga en operaciones de lectura/escritura.
-* **Arquitectura Thread-Safe:** Las operaciones de memoria están protegidas contra condiciones de carrera bajo alta concurrencia usando sincronización granular con `std::lock_guard<std::mutex>`.
-* **Protocolo y Parser Propios:** Implementa un protocolo TCP de texto ligero que soporta las operaciones principales (`SET`, `GET`, `DEL`).
-* **Perfilado de Latencia:** Incluye una suite de *benchmarking* personalizada que mide la latencia bruta de las operaciones en memoria, calculando la distribución en los percentiles p10, p50, p90 y p99.
