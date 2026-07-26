@@ -1,0 +1,4 @@
+/mnt/c/Users/Usuario/Downloads/MemCore/build/CMakeFiles/MemCore.dir
+/mnt/c/Users/Usuario/Downloads/MemCore/build/CMakeFiles/MemCore_Benchmark.dir
+/mnt/c/Users/Usuario/Downloads/MemCore/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/Usuario/Downloads/MemCore/build/CMakeFiles/rebuild_cache.dir

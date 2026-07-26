@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -march=native -flto -Wl,--dependency-file=CMakeFiles/MemCore_Server.dir/link.d CMakeFiles/MemCore_Server.dir/src/server.cpp.o CMakeFiles/MemCore_Server.dir/src/Database.cpp.o -o MemCore_Server
