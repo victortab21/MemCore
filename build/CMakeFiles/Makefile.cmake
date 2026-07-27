@@ -56,4 +56,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/MemCore.dir/DependInfo.cmake"
   "CMakeFiles/MemCore_Benchmark.dir/DependInfo.cmake"
+  "CMakeFiles/MemCore_LoadTester.dir/DependInfo.cmake"
   )

@@ -53,7 +53,7 @@ void TcpServer::setNonBlocking(int fd) {
     fcntl(fd, F_SETFL, flags | O_NONBLOCK);
 }
 
-// --- BUCLE PRINCIPAL (Event Loop) ---
+
 int TcpServer::run() {
     while (true) {
         int num_events = epoll_wait(epoll_fd, events.data(), MAX_EVENTS, -1);
@@ -76,14 +76,14 @@ int TcpServer::run() {
     return 0;
 }
 
-// --- ACEPTAR NUEVOS CLIENTES ---
+//aceptar nuevas conexiones
 void TcpServer::handleNewConnection() {
     while (true) {
         sockaddr_in6 client_addr;
         socklen_t client_len = sizeof(client_addr);
         int client_fd = accept(server_fd, (struct sockaddr*)&client_addr, &client_len);
         
-        if (client_fd == -1) break; // No hay más conexiones pendientes
+        if (client_fd == -1) break; // Se han acabado las conexiones pendientes
 
         setNonBlocking(client_fd);
         epoll_event client_ev;

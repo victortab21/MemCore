@@ -142,6 +142,19 @@ MemCore_Benchmark/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MemCore_Benchmark.dir/build.make CMakeFiles/MemCore_Benchmark.dir/build
 .PHONY : MemCore_Benchmark/fast
 
+#=============================================================================
+# Target rules for targets named MemCore_LoadTester
+
+# Build rule for target.
+MemCore_LoadTester: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 MemCore_LoadTester
+.PHONY : MemCore_LoadTester
+
+# fast build rule for target.
+MemCore_LoadTester/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MemCore_LoadTester.dir/build.make CMakeFiles/MemCore_LoadTester.dir/build
+.PHONY : MemCore_LoadTester/fast
+
 src/Database.o: src/Database.cpp.o
 .PHONY : src/Database.o
 
@@ -217,6 +230,30 @@ src/benchmark.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MemCore_Benchmark.dir/build.make CMakeFiles/MemCore_Benchmark.dir/src/benchmark.cpp.s
 .PHONY : src/benchmark.cpp.s
 
+src/load_tester.o: src/load_tester.cpp.o
+.PHONY : src/load_tester.o
+
+# target to build an object file
+src/load_tester.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MemCore_LoadTester.dir/build.make CMakeFiles/MemCore_LoadTester.dir/src/load_tester.cpp.o
+.PHONY : src/load_tester.cpp.o
+
+src/load_tester.i: src/load_tester.cpp.i
+.PHONY : src/load_tester.i
+
+# target to preprocess a source file
+src/load_tester.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MemCore_LoadTester.dir/build.make CMakeFiles/MemCore_LoadTester.dir/src/load_tester.cpp.i
+.PHONY : src/load_tester.cpp.i
+
+src/load_tester.s: src/load_tester.cpp.s
+.PHONY : src/load_tester.s
+
+# target to generate assembly for a file
+src/load_tester.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MemCore_LoadTester.dir/build.make CMakeFiles/MemCore_LoadTester.dir/src/load_tester.cpp.s
+.PHONY : src/load_tester.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -251,6 +288,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... MemCore"
 	@echo "... MemCore_Benchmark"
+	@echo "... MemCore_LoadTester"
 	@echo "... src/Database.o"
 	@echo "... src/Database.i"
 	@echo "... src/Database.s"
@@ -260,6 +298,9 @@ help:
 	@echo "... src/benchmark.o"
 	@echo "... src/benchmark.i"
 	@echo "... src/benchmark.s"
+	@echo "... src/load_tester.o"
+	@echo "... src/load_tester.i"
+	@echo "... src/load_tester.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

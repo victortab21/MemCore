@@ -12,8 +12,10 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native -flto")
 
 include_directories(include)
 
-# 1. Tu servidor principal (Une el main, la red y la base de datos)
 add_executable(MemCore src/main.cpp src/TcpServer.cpp src/Database.cpp)
 
-# 2. Tu programa de pruebas de rendimiento (Benchmark)
+
 add_executable(MemCore_Benchmark src/benchmark.cpp src/Database.cpp)
+
+
+add_executable(MemCore_LoadTester src/load_tester.cpp)

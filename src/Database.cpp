@@ -1,15 +1,12 @@
 #include "Database.h"
 
-// SET
 void Database::set(const std::string& key, const std::string& value) {
-  std :: lock_guard<std::mutex> cerrojo_1(mtx);
+    std::lock_guard<std::mutex> lock(mtx);
     storage[key] = value;
-
 }
 
-//GET
 std::string Database::get(const std::string& key) {
-  std :: lock_guard<std::mutex> cerrojo_2(mtx);
+    std::lock_guard<std::mutex> lock(mtx);
     auto it = storage.find(key);
     
     if (it != storage.end()) {
@@ -19,8 +16,7 @@ std::string Database::get(const std::string& key) {
     return "NULL"; 
 }
 
-//REMOVE
 bool Database::remove(const std::string& key) {
-      std :: lock_guard<std::mutex> cerrojo_3(mtx);
+    std::lock_guard<std::mutex> lock(mtx);
     return storage.erase(key) > 0;
 }
