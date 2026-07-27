@@ -1,6 +1,6 @@
 # MemCore
 
-An in-memory, thread-safe key-value store written in C++17. Uses an asynchronous event loop with Linux `epoll` (Edge-Triggered) and non-blocking I/O to handle TCP connections over IPv6.
+An in-memory, thread-safe key-value store written in C++17. Uses an asynchronous event loop with Linux epoll (Edge-Triggered) and non-blocking I/O to handle TCP connections over IPv6.
 
 ---
 
