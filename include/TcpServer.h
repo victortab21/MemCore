@@ -15,7 +15,7 @@ private:
     void setNonBlocking(int fd);
     void handleNewConnection();
     void handleClientData(int client_fd);
-    std::string processCommand(const std::string& raw_data); // Aquí irá el parser
+   std::string processCommand(std::string_view raw_data);
 
 public:
     TcpServer(int port, Database& db);

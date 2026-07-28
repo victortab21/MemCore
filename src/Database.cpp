@@ -1,22 +1,24 @@
 #include "Database.h"
 
 void Database::set(const std::string& key, const std::string& value) {
-    std::lock_guard<std::mutex> lock(mtx);
-    storage[key] = value;
+    size_t idx = getShardIndex(key);
+    std::unique_lock<std::shared_mutex> lock(shards[idx].mtx);
+    shards[idx].storage[key] = value;
 }
 
 std::string Database::get(const std::string& key) {
-    std::lock_guard<std::mutex> lock(mtx);
-    auto it = storage.find(key);
+    size_t idx = getShardIndex(key);
+    std::shared_lock<std::shared_mutex> lock(shards[idx].mtx);
     
-    if (it != storage.end()) {
-        return it->second; 
+    auto it = shards[idx].storage.find(key);
+    if (it != shards[idx].storage.end()) {
+        return it->second;
     }
-    
-    return "NULL"; 
+    return "NULL";
 }
 
 bool Database::remove(const std::string& key) {
-    std::lock_guard<std::mutex> lock(mtx);
-    return storage.erase(key) > 0;
+    size_t idx = getShardIndex(key);
+    std::unique_lock<std::shared_mutex> lock(shards[idx].mtx);
+    return shards[idx].storage.erase(key) > 0;
 }

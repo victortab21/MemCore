@@ -111,41 +111,54 @@ void TcpServer::handleClientData(int client_fd) {
             break;
         }
 
-        string raw_data(buffer, bytes_recv);
+  
+        std::string_view raw_data(buffer, bytes_recv);
         string response = processCommand(raw_data);
         send(client_fd, response.c_str(), response.length(), 0);
     }
 }
 
-// --- PARSER DE COMANDOS ---
-string TcpServer::processCommand(const string& raw_data) {
-    stringstream ss(raw_data);
-    string comando, key, value, respuesta;
+string TcpServer::processCommand(std::string_view raw_data) {
+    while (!raw_data.empty() && (raw_data.back() == '\n' || raw_data.back() == '\r')) {
+        raw_data.remove_suffix(1); // Simplemente mueve el puntero del final hacia atrás
+    }
+
+    size_t primer_espacio = raw_data.find(' ');
+    std::string_view comando = raw_data.substr(0, primer_espacio);
     
-    ss >> comando;
+    string respuesta;
 
     if (comando == "SET") {
-        ss >> key >> value;
-        if (!key.empty() && !value.empty()) {
-            db.set(key, value);
-            respuesta = "+OK\r\n";
+        if (primer_espacio != std::string_view::npos) {
+            raw_data.remove_prefix(primer_espacio + 1);
+            size_t segundo_espacio = raw_data.find(' ');
+            
+            if (segundo_espacio != std::string_view::npos) {
+                std::string_view key = raw_data.substr(0, segundo_espacio);
+                std::string_view value = raw_data.substr(segundo_espacio + 1);
+                
+                db.set(string(key), string(value));
+                respuesta = "+OK\r\n";
+            } else {
+                respuesta = "-ERR Usage: SET <key> <value>\r\n";
+            }
         } else {
             respuesta = "-ERR Usage: SET <key> <value>\r\n";
         }
     } 
     else if (comando == "GET") {
-        ss >> key;
-        if (!key.empty()) {
-            string res = db.get(key);
+        if (primer_espacio != std::string_view::npos) {
+            std::string_view key = raw_data.substr(primer_espacio + 1);
+            string res = db.get(string(key));
             respuesta = (res != "NULL") ? "$" + res + "\r\n" : "-ERR Key not found\r\n";
         } else {
             respuesta = "-ERR Usage: GET <key>\r\n";
         }
     } 
     else if (comando == "DEL" || comando == "REMOVE") {
-        ss >> key;
-        if (!key.empty()) {
-            bool borrado = db.remove(key);
+        if (primer_espacio != std::string_view::npos) {
+            std::string_view key = raw_data.substr(primer_espacio + 1);
+            bool borrado = db.remove(string(key));
             respuesta = borrado ? "+OK\r\n" : "-ERR Key not found\r\n";
         } else {
             respuesta = "-ERR Usage: DEL <key>\r\n";

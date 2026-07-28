@@ -1,0 +1,43 @@
+A continuación se muestran varios outputs de LoadTester con sus respectivas versiones: 
+========================================
+    MemCore - TCP Stress & Load Tester  
+========================================
+[INFO] Lanzando 50 hilos concurrentes.
+[INFO] Operaciones totales a inyectar: 100000...
+
+--- RESULTADOS DEL STRESS TEST ---
+Tiempo total empleado:   2.86284 segundos
+Operaciones exitosas:    100000
+Operaciones fallidas:    0
+Rendimiento (Throughput): 34930.3 RPS (Requests/sec)
+
+Versión con mutex compartido (16 SHARD): 
+--- RESULTADOS DEL STRESS TEST ---
+Tiempo total empleado:   1.97296 segundos
+Operaciones exitosas:    100000
+Operaciones fallidas:    0
+Rendimiento (Throughput): 50685.3 RPS (Requests/sec)
+
+
+Versión con string views: 
+--- RESULTADOS DEL STRESS TEST ---
+Tiempo total empleado:   1.84047 segundos
+Operaciones exitosas:    100000
+Operaciones fallidas:    0
+Rendimiento (Throughput): 54334.1 RPS (Requests/sec)
+
+Salida haciendo 10.000.000 de operaciones con 128 SHARD: 
+┌──(elbakano㉿DESKTOP-1CHVR8F)-[/mnt/c/Users/Usuario/Downloads/MemCore/build]
+└─$ ./MemCore_LoadTester
+========================================
+    MemCore - TCP Stress & Load Tester  
+========================================
+[INFO] Lanzando 500 hilos concurrentes.
+[INFO] Operaciones totales a inyectar: 10000000...
+
+--- RESULTADOS DEL STRESS TEST ---
+Tiempo total empleado:   305.243 segundos
+Operaciones exitosas:    10000000
+Operaciones fallidas:    0
+Rendimiento (Throughput): 32760.8 RPS (Requests/sec)
+
